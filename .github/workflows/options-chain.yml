@@ -32,5 +32,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: options-data
-        path: NFLX_options_*.csv
+        path: *_options_*.csv
         retention-days: 7
