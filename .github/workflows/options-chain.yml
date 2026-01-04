@@ -1,0 +1,36 @@
+name: Fetch Options Chain
+
+on:
+  schedule:
+    - cron: '23 22 * * 2-6'  # Tues-Sat 9AM AEDT
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  fetch-options:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Run options script
+      env:
+        ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
+        ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
+      run: python oc.py
+    
+    - name: Upload CSV artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: options-data
+        path: NFLX_options_*.csv
+        retention-days: 7
