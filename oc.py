@@ -132,5 +132,5 @@ def fetch_multiple_tickers(ticker_list, exp_days=45, strike_pct=0.3):
         print(f"✅ Saved {len(df)} contracts to {filename}")
 
 if __name__ == "__main__":
-    tickers = ["CALM", "RKLB", "NFLX", "UBER", "ONDS"]
+    tickers = ["CALM", "RKLB", "NFLX", "UBER", "ONDS", "V"]
     fetch_multiple_tickers(tickers)
