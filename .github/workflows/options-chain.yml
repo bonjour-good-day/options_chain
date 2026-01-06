@@ -34,4 +34,4 @@ jobs:
         name: options-data
         path: | 
           *_options_*.csv
-        retention-days: 7
+        retention-days: 30
