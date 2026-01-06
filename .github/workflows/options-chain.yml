@@ -2,7 +2,7 @@ name: Fetch Options Chain
 
 on:
   schedule:
-    - cron: '23 22 * * 2-6'  # Tues-Sat 9AM AEDT
+    - cron: '0 23 * * 1-5'
   workflow_dispatch:  # Manual trigger
 
 jobs:
