@@ -4,28 +4,20 @@ Yahoo Finance Options Chain Data Fetcher (100% FREE) - MULTI TICKER VERSION
 - Supports multiple tickers
 - Saves each ticker into its own CSV
 - Filename format: TICKER_YYYYMMDD_HHMMSS.csv
-- All CSVs saved to: /xxx/yfoc
-
-Installation:
-pip install yfinance pandas duckdb
+- Saves to CURRENT DIRECTORY (no hardcoded paths)
 """
 
 import yfinance as yf
 import pandas as pd
 from datetime import datetime, timedelta
 import time
-import os
 
 
 class YahooOptionsChainFetcher:
     def __init__(self):
-        """Initialize Yahoo Finance options fetcher - No credentials needed!"""
         pass
 
     def get_option_chain(self, ticker, max_expiry_days=45):
-        """
-        Fetch complete options chain for a ticker
-        """
         try:
             stock = yf.Ticker(ticker)
 
@@ -112,12 +104,9 @@ class YahooOptionsChainFetcher:
             print(f"❌ Error fetching options chain for {ticker}: {e}")
             return pd.DataFrame()
 
-    def save_to_csv(self, df, filename, output_dir):
-        """Save options data to CSV in specified directory"""
-        os.makedirs(output_dir, exist_ok=True)
-        full_path = os.path.join(output_dir, filename)
-        df.to_csv(full_path, index=False)
-        print(f"💾 Saved {len(df)} records to {full_path}")
+    def save_to_csv(self, df, filename):
+        df.to_csv(filename, index=False)
+        print(f"💾 Saved {len(df)} records to {filename}")
 
 
 # =========================================================
@@ -134,8 +123,6 @@ TICKERS = [
 ]
 
 MAX_EXPIRY_DAYS = 45   # change to None for all expiries
-
-OUTPUT_DIR = "/Users/monpabi/dev/financial_news/data_scraper/options/yfoc"
 
 
 # =========================================================
@@ -155,16 +142,14 @@ def run_multi_ticker_scrape():
         if not df.empty:
             run_ts = datetime.now().strftime("%Y%m%d_%H%M%S")
             filename = f"{ticker}_{run_ts}.csv"
-            fetcher.save_to_csv(df, filename, OUTPUT_DIR)
+            fetcher.save_to_csv(df, filename)
         else:
             print(f"⚠️ No data retrieved for {ticker}")
 
-        # Rate limit
         time.sleep(1)
 
 
 if __name__ == "__main__":
     print("🚀 Options Chain Multi-Ticker Scraper Started")
-    print(f"📁 Output directory: {OUTPUT_DIR}")
     run_multi_ticker_scrape()
     print("\n✅ All tickers processed")
