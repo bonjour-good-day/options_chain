@@ -141,7 +141,7 @@ def run_multi_ticker_scrape():
 
         if not df.empty:
             run_ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-            filename = f"{ticker}_{run_ts}.csv"
+            filename = f"{ticker}_{run_ts}_yf.csv"
             fetcher.save_to_csv(df, filename)
         else:
             print(f"⚠️ No data retrieved for {ticker}")
